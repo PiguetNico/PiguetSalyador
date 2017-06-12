@@ -1,5 +1,6 @@
 /**
- * Class Calculator which creates the graphic part of the calculator and the behavior of the buttons 
+ * Class Calculator which creates the graphic part
+ * of the calculator and the behavior of the buttons 
  * @author Beyza Salyador
  */
 

@@ -1,5 +1,7 @@
 /**
- * Class which creates the graphic part of the gallery of pictures with a table and a GridLayout
+ * Class which creates the graphic part of 
+ * the gallery of pictures with a table and 
+ * a GridLayout
  * @author Beyza Salyador
  */
 
