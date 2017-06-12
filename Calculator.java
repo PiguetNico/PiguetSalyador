@@ -17,19 +17,20 @@ import javax.swing.JPanel;
 
 
 public class Calculator extends JPanel {
-	//DEFINE A JPANEL OF BASE
-	JPanel container = new JPanel();
 
 	//DEFINING THE FONT FOR THE DISPLAY
-	Font fontDisplay = new Font("Arial", Font.BOLD, 40);
+	private Font fontDisplay = new Font("Arial", Font.BOLD, 40);
 
 	//DEFINE THE 2 TABLES CONTAINING THE BUTTONS
-	String[] tableOfString = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "=", "C", "+", "-", "*", "/"};
-	JButton[] tableOfButtons = new JButton[tableOfString.length];
+	private String[] tableOfString = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "=", "C", "+", "-", "*", "/"};
+	private JButton[] tableOfButtons = new JButton[tableOfString.length];
 
 	//CREATING THE OTHER ELEMENTS OF THE CALCULATOR
 	private JButton back = new JButton("Back");
 	private JPanel panelNorth = new JPanel();
+	private JPanel operators = new JPanel();
+	private JPanel numbers = new JPanel();
+	private JPanel displayButtonAndCalculation = new JPanel();
 	private JLabel displayCalculation = new JLabel();
 	private Dimension size = new Dimension(100, 120);
 	private Font font = new Font("Arial",Font.BOLD,30);
@@ -40,22 +41,60 @@ public class Calculator extends JPanel {
 	private boolean update = false;
 	private String operator = "";
 
+
 	public Calculator(JFrame frame){
+
 		setBackground(Color.BLACK);
 
+		initialize();
+
+		//ADD ACTION FOR BUTTON WITH ANONYMOUS CLASS
+		back.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "home");
+			}
+		});	
+	}
+
+	/*
+	 * This private method customize and add all
+	 * the components we need for this class
+	 */
+	private void initialize() {
 		//PUTTING 0 LIKE DEFAULT VALUE IN THE DISPLAYCALCULATION AND PUTTING INFORMATION TO THE RIGHT IN THE JLABEL
 		displayCalculation = new JLabel("0");
 		displayCalculation.setFont(fontDisplay);
 		displayCalculation.setHorizontalAlignment(JLabel.RIGHT);
 		displayCalculation.setPreferredSize(new Dimension(180, 60));
 
-		//CREATING THE OTHER JPANEL AND RESIZING THEM
-		JPanel operators = new JPanel();      
+		//RESIZE THE PANELS
 		operators.setPreferredSize(new Dimension(120, 500));
-		JPanel numbers = new JPanel();
 		numbers.setPreferredSize(new Dimension(320, 500));
-		JPanel displayButtonAndCalculation = new JPanel();
 		displayButtonAndCalculation.setPreferredSize(new Dimension(450, 50));
+
+		//ADDING THE BUTTON BACK AND THE LABEL IN THE DISPLAYBUTTONANDCALCULATION
+		panelNorth.setBackground(Color.GRAY);
+		panelNorth.add(back);
+		add(panelNorth, BorderLayout.NORTH);
+		displayButtonAndCalculation.add(displayCalculation);
+
+		//CREATING A NEW GRIDLAYOUT
+		displayButtonAndCalculation.setLayout(new GridLayout(1, 1));
+		displayButtonAndCalculation.setBorder(BorderFactory.createLineBorder(Color.black));
+
+		//PUTTING THE ELEMENT OF THE CALCULATOR IN THE GOOD PLACE
+		numbers.setBackground(Color.DARK_GRAY);
+		operators.setBackground(Color.BLACK);
+		add(displayButtonAndCalculation, BorderLayout.NORTH);
+		add(numbers, BorderLayout.CENTER);
+		add(operators, BorderLayout.EAST);
+
+		// BUTTONS
+		back.setPreferredSize(new Dimension(90,90));
+		back.setBackground(Color.BLACK);
+		back.setOpaque(true);
+		back.setBorderPainted(false);
+		back.setForeground(Color.WHITE);
 
 		//CREATING THE BUTTONS WITH A LOOP FOR
 		for(int i = 0; i < tableOfString.length; i++){
@@ -129,37 +168,6 @@ public class Calculator extends JPanel {
 				break;
 			}
 		}
-
-		//ADDING THE BUTTON BACK AND THE LABEL IN THE DISPLAYBUTTONANDCALCULATION
-		panelNorth.setBackground(Color.GRAY);
-		panelNorth.add(back);
-		add(panelNorth, BorderLayout.NORTH);
-		displayButtonAndCalculation.add(displayCalculation);
-
-		//CREATING A NEW GRIDLAYOUT
-		displayButtonAndCalculation.setLayout(new GridLayout(1, 1));
-		displayButtonAndCalculation.setBorder(BorderFactory.createLineBorder(Color.black));
-
-		//PUTTING THE ELEMENT OF THE CALCULATOR IN THE GOOD PLACE
-		numbers.setBackground(Color.DARK_GRAY);
-		operators.setBackground(Color.BLACK);
-		add(displayButtonAndCalculation, BorderLayout.NORTH);
-		add(numbers, BorderLayout.CENTER);
-		add(operators, BorderLayout.EAST);
-
-		// BUTTONS
-		back.setPreferredSize(new Dimension(90,90));
-		back.setBackground(Color.BLACK);
-		back.setOpaque(true);
-		back.setBorderPainted(false);
-		back.setForeground(Color.WHITE);
-
-		//ADD ACTION FOR BUTTON WITH ANONYMOUS CLASS
-		back.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "home");
-			}
-		});	
 	}
 
 	//METHOD WHICH DOES THE CALCULATION ACCORDING TO THE CHOSEN OPERATOR
@@ -274,7 +282,7 @@ public class Calculator extends JPanel {
 			clicOperator = false;
 			update = true;
 			operator = "";
-			displayCalculation.setText("");
+			displayCalculation.setText("0");
 		}
 	}      
 }
