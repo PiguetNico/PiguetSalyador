@@ -56,7 +56,7 @@ public class Calculator extends JPanel {
 		});	
 	}
 
-	/*
+	/**
 	 * This private method customize and add all
 	 * the components we need for this class
 	 */
