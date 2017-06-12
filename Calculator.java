@@ -275,7 +275,7 @@ public class Calculator extends JPanel {
 			update = true;
 		}
 	}
-
+/**vv*/
 	class CancelListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0){
 			number1 = 0;
