@@ -13,6 +13,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,7 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
+import Pictures.Pictures;
+import Pictures.ShowImage;
 
 
 public class AddContact extends JPanel {
@@ -31,7 +33,6 @@ public class AddContact extends JPanel {
 	private JButton save = new JButton("Save");
 	private JButton black = new JButton();
 	private JPanel panelNorth = new JPanel();
-
 
 	private JButton photo = new JButton("PHOTO");
 	private JLabel lastName = new JLabel("Lastname");
@@ -44,11 +45,82 @@ public class AddContact extends JPanel {
 	private Font font = new Font("Arial",Font.BOLD,20);
 
 
-
 	public AddContact(JFrame frame, Contacts cont) {
 
 		setBackground(Color.BLACK);
 
+		initialize();
+
+		// ADD ACTION FOR BUTTONS WITH ANONYMOUS CLASS
+		back.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "contacts");
+			}
+		});
+		
+		photo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "pictures");
+			}
+		});
+
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtLastName.setText("");
+				txtName.setText("");
+				txtNumber.setText("");
+				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "contacts");
+			}
+		});
+
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+
+				// ADD CONTACT IN THE JLIST
+				cont.list.add(txtLastName.getText().toUpperCase()+" : " + txtName.getText()+" : " + txtNumber.getText());
+
+				// ADD CONTACT IN THE TXT FILE
+				File contact = new File("Contacts.txt");
+
+				try{
+
+					// WRITE TO "CONTACTS.TXT" WITHOUT OVERWRITING, WE HAVE TO ADD "TRUE"
+					FileWriter fw = new FileWriter(contact, true);
+					BufferedWriter bw = new BufferedWriter(fw);
+					bw.write( "\n" + txtLastName.getText().toUpperCase()+" : " + txtName.getText()+" : " + txtNumber.getText() );
+					bw.close();
+
+				} catch(IOException e1) {
+					e1.printStackTrace();
+				}
+
+				// METHODS TO REFRESH THE JLIST
+				Collections.sort(cont.list);
+				cont.jlist.setListData(cont.list);
+				cont.jlist.setSelectedIndex(0);
+
+
+
+				// RESET FIELDS
+				txtLastName.setText("");
+				txtName.setText("");
+				txtNumber.setText("");
+
+				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "contacts");
+			}
+		});
+	}
+	
+	public JButton getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(JButton photo) {
+		this.photo = photo;
+	}
+
+	private void initialize() {
 		// PANEL
 		panelNorth.setBackground(Color.GRAY);
 		panelNorth.add(back);
@@ -92,7 +164,7 @@ public class AddContact extends JPanel {
 		number.setForeground(Color.WHITE);
 		number.setFont(font);
 		txtNumber.setFont(font);
-		
+
 		panelCentral.add(black);
 		panelCentral.add(photo);
 		panelCentral.add(lastName);
@@ -102,58 +174,7 @@ public class AddContact extends JPanel {
 		panelCentral.add(number);
 		panelCentral.add(txtNumber);
 		panelCentral.setLayout(new GridLayout(0,1,10,15));  // give panel dimensions !
-		
-		add(panelCentral, BorderLayout.CENTER);
 
-
-
-
-		// ADD ACTION FOR BUTTONS WITH ANONYMOUS CLASS
-		back.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "contacts");
-			}
-		});
-
-
-		cancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtLastName.setText("");
-				txtName.setText("");
-				txtNumber.setText("");
-				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "contacts");
-			}
-		});
-
-
-		save.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				// ADD CONTACT IN THE JLIST
-//					list.add(txtLastName.getText().toUpperCase()+":" + txtName.getText()+":" + txtNumber.getText());
-				
-				// ADD CONTACT IN THE TXT FILE
-				File contact = new File("Contacts.txt");
-
-				try{
-
-					// WRITE TO "CONTACTS.TXT" WITHOUT OVERWRITING, WE HAVE TO ADD "TRUE"
-					FileWriter fw = new FileWriter(contact, true);
-					BufferedWriter bw = new BufferedWriter(fw);
-					bw.write( "\n" + txtLastName.getText().toUpperCase()+":" + txtName.getText()+":" + txtNumber.getText() );
-					bw.close();
-					
-//					cont.getNewListContact();
-					
-				} catch(IOException e1) {
-					e1.printStackTrace();
-				}
-				
-				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "contacts");
-				
-				cont.validate();
-				cont.repaint();
-			}
-		});
+		add(panelCentral, BorderLayout.CENTER);		
 	}
 }
