@@ -38,7 +38,8 @@ public class Calculator extends JPanel {
 	private JPanel numbers = new JPanel();
 	private JPanel displayButtonAndCalculation = new JPanel();
 	private JLabel displayCalculation = new JLabel();
-	private Dimension size = new Dimension(100, 120);
+	private Dimension size = new Dimension(100, 110);
+	private Dimension size2 = new Dimension(100, 140);
 	private Font font = new Font("Arial",Font.BOLD,30);
 
 	//DEFINING THE ELEMENTS FOR THE CALCULATION
@@ -78,8 +79,8 @@ public class Calculator extends JPanel {
 		displayCalculation.setPreferredSize(new Dimension(180, 60));
 
 		//RESIZE THE PANELS
-		operators.setPreferredSize(new Dimension(120, 500));
-		numbers.setPreferredSize(new Dimension(320, 500));
+		operators.setPreferredSize(new Dimension(120, 600));
+		numbers.setPreferredSize(new Dimension(320, 600));
 		displayButtonAndCalculation.setPreferredSize(new Dimension(450, 50));
 
 		//ADDING THE BUTTON BACK AND THE LABEL IN THE DISPLAYBUTTONANDCALCULATION
@@ -112,7 +113,7 @@ public class Calculator extends JPanel {
 		 */
 		for(int i = 0; i < tableOfString.length; i++){
 			tableOfButtons[i] = new JButton(tableOfString[i]);
-			tableOfButtons[i].setPreferredSize(size);
+			tableOfButtons[i].setPreferredSize(size2);
 			tableOfButtons[i].setFont(font);
 
 			/**
