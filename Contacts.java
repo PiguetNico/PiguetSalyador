@@ -64,74 +64,15 @@ public class Contacts extends JPanel {
 
 		modify.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-				lineSelectedToModify = jlist.getSelectedValue().toString();
+				modify();
 				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "modifyContact");
-				}catch (Exception e1){
-					JOptionPane.showMessageDialog(null, "FAILED TO MODIFY CONTACT !!! ");
-				}
 			}
 		});
 
 
 		delete.addActionListener (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				// DELETE CONTACT IN THE TXT FILE
-				try {
-					File inputFile = new File("Contacts.txt");
-					File tempFile = new File("ContactsTemp.txt");
-
-					BufferedReader br = new BufferedReader(new FileReader(inputFile));
-					BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
-
-					lineSelected = jlist.getSelectedValue().toString();
-					String currentLine;
-
-					int i = 0;
-					while((currentLine = br.readLine()) != null) {
-						String trimmedLine = currentLine.trim();
-						if(!trimmedLine.contains(lineSelected)) { //startswith()
-							if(i == 0){
-								bw.write(currentLine); 
-							}
-							else{
-								bw.write("\n" + currentLine); 
-							}
-							i++;
-						}
-					}  
-
-					// DELETE CONTACT IN THE JLIST
-					int index = jlist.getSelectedIndex();
-					if (index != -1){
-						list.remove(index);
-					}
-
-					bw.close();
-
-					// METHODS TO REFRESH THE JLIST
-					Collections.sort(list);
-					jlist.setListData(list);
-					jlist.setSelectedIndex(0);
-
-
-					if(!inputFile.delete()) {
-						JOptionPane.showMessageDialog(null, "IMPOSSIBLE TO RENAME TEMPFILE");
-						return;
-					}
-					if(!tempFile.renameTo(inputFile))
-						JOptionPane.showMessageDialog(null, "IMPOSSIBLE TO RENAME TEMPFILE");
-
-
-					br.close();
-					tempFile.renameTo(inputFile);	
-				}
-
-				catch(Exception e1) {
-					JOptionPane.showMessageDialog(null, "FAILED TO DELETE CONTACT !!! ");
-					e1.printStackTrace();
-				}
+				delete();
 			}
 		});
 	}
@@ -170,7 +111,72 @@ public class Contacts extends JPanel {
 		add(panel);
 	}
 
+	public void delete() {
+		// DELETE CONTACT IN THE TXT FILE
+		try {
+			File inputFile = new File("Contacts.txt");
+			File tempFile = new File("ContactsTemp.txt");
 
+			BufferedReader br = new BufferedReader(new FileReader(inputFile));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
+
+			lineSelected = jlist.getSelectedValue().toString();
+			String currentLine;
+
+			int i = 0;
+			while((currentLine = br.readLine()) != null) {
+				String trimmedLine = currentLine.trim();
+				if(!trimmedLine.contains(lineSelected)) { //startswith()
+					if(i == 0){
+						bw.write(currentLine); 
+					}
+					else{
+						bw.write("\n" + currentLine); 
+					}
+					i++;
+				}
+			}  
+
+			// DELETE CONTACT IN THE JLIST
+			int index = jlist.getSelectedIndex();
+			if (index != -1){
+				list.remove(index);
+			}
+
+			bw.close();
+
+			// METHODS TO REFRESH THE JLIST
+			Collections.sort(list);
+			jlist.setListData(list);
+			jlist.setSelectedIndex(0);
+
+
+			if(!inputFile.delete()) {
+				JOptionPane.showMessageDialog(null, "IMPOSSIBLE TO RENAME TEMPFILE");
+				return;
+			}
+			if(!tempFile.renameTo(inputFile))
+				JOptionPane.showMessageDialog(null, "IMPOSSIBLE TO RENAME TEMPFILE");
+
+
+			br.close();
+			tempFile.renameTo(inputFile);	
+		}
+
+		catch(Exception e1) {
+			JOptionPane.showMessageDialog(null, "FAILED TO DELETE CONTACT !!! ");
+			e1.printStackTrace();
+		}
+	}
+
+	public void modify(){
+		try {
+			lineSelectedToModify = jlist.getSelectedValue().toString();
+			}catch (Exception e1){
+				JOptionPane.showMessageDialog(null, "FAILED TO MODIFY CONTACT !!! ");
+			}
+	}
+	
 	private void getNewListContact() throws IOException{
 		String line="";
 		File contacts = new File("Contacts.txt");
