@@ -1,3 +1,8 @@
+/**
+ * Class Calculator which creates the graphic part of the calculator and the behavior of the buttons 
+ * @author Beyza Salyador
+ */
+
 package Calculator;
 
 import java.awt.BorderLayout;
@@ -50,6 +55,10 @@ public class Calculator extends JPanel {
 
 		//ADD ACTION FOR BUTTON WITH ANONYMOUS CLASS
 		back.addActionListener(new ActionListener() {
+			/**
+			 * Define the action when we click to "Back"
+			 * @author Beyza Salyador
+			 */
 			public void actionPerformed(ActionEvent e) {
 				((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "home");
 			}
@@ -96,13 +105,19 @@ public class Calculator extends JPanel {
 		back.setBorderPainted(false);
 		back.setForeground(Color.WHITE);
 
-		//CREATING THE BUTTONS WITH A LOOP FOR
+		/**
+		 * CREATING THE BUTTONS WITH A LOOP FOR
+		 * @author Beyza Salyador
+		 */
 		for(int i = 0; i < tableOfString.length; i++){
 			tableOfButtons[i] = new JButton(tableOfString[i]);
 			tableOfButtons[i].setPreferredSize(size);
 			tableOfButtons[i].setFont(font);
 
-			//CHOSEN THE ACTION ACCORDING TO THE BUTTON WITH SWITCH
+			/**
+			 * Create the listener of the according button with a switch case
+			 * @author Beyza Salyador
+			 */
 			switch(i){
 
 			//EQUAL
@@ -111,7 +126,7 @@ public class Calculator extends JPanel {
 				numbers.add(tableOfButtons[i]);
 				break;
 
-				//RESET
+			//RESET
 			case 12 :
 				tableOfButtons[i].setBackground(Color.ORANGE);
 				tableOfButtons[i].setOpaque(true);
@@ -121,7 +136,7 @@ public class Calculator extends JPanel {
 				operators.add(tableOfButtons[i]);
 				break;
 
-				//SUM
+			//SUM
 			case 13 :
 				tableOfButtons[i].setBackground(Color.ORANGE);
 				tableOfButtons[i].setOpaque(true);
@@ -131,7 +146,7 @@ public class Calculator extends JPanel {
 				operators.add(tableOfButtons[i]);
 				break;
 
-				//SUBTRACTION
+			//SUBTRACTION
 			case 14 :
 				tableOfButtons[i].setBackground(Color.ORANGE);
 				tableOfButtons[i].setOpaque(true);
@@ -141,7 +156,7 @@ public class Calculator extends JPanel {
 				operators.add(tableOfButtons[i]);
 				break; 
 
-				//MULTIPLICATION
+			//MULTIPLICATION
 			case 15 :
 				tableOfButtons[i].setBackground(Color.ORANGE);
 				tableOfButtons[i].setOpaque(true);
@@ -151,7 +166,7 @@ public class Calculator extends JPanel {
 				operators.add(tableOfButtons[i]);
 				break;
 
-				//DIVISION
+			//DIVISION
 			case 16 :
 				tableOfButtons[i].setBackground(Color.ORANGE);
 				tableOfButtons[i].setOpaque(true);
@@ -161,7 +176,7 @@ public class Calculator extends JPanel {
 				operators.add(tableOfButtons[i]);
 				break;
 
-				//NUMBERS
+			//NUMBERS
 			default :
 				numbers.add(tableOfButtons[i]);
 				tableOfButtons[i].addActionListener(new NumberListener());
@@ -170,7 +185,10 @@ public class Calculator extends JPanel {
 		}
 	}
 
-	//METHOD WHICH DOES THE CALCULATION ACCORDING TO THE CHOSEN OPERATOR
+	/**
+	 * Method which does the calculation according to the chosen operator
+	 * @author Beyza Salyador
+	 */
 	private void calculation(){
 		if(operator == "+"){
 			number1 = number1 + Double.valueOf(displayCalculation.getText()).doubleValue();
@@ -194,6 +212,10 @@ public class Calculator extends JPanel {
 		}
 	}
 
+	/**
+	 * Class which does the action of the numbers
+	 * @author Beyza Salyador
+	 */
 	class NumberListener implements ActionListener {
 		public void actionPerformed(ActionEvent e){
 			String text = ((JButton)e.getSource()).getText();
@@ -207,7 +229,11 @@ public class Calculator extends JPanel {
 			displayCalculation.setText(text);
 		}
 	}
-
+	
+	/**
+	 * Class which does the action of the equal
+	 * @author Beyza Salyador
+	 */
 	class EqualListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0){
 			calculation();
@@ -216,6 +242,10 @@ public class Calculator extends JPanel {
 		}
 	}
 
+	/**
+	 * Class which does the action of the operator of sum
+	 * @author Beyza Salyador
+	 */
 	class SumListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0){
 			if(clicOperator){
@@ -231,6 +261,10 @@ public class Calculator extends JPanel {
 		}
 	}
 
+	/**
+	 * Class which does the action of the operator of subtraction
+	 * @author Beyza Salyador
+	 */
 	class SubtractionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0){
 			if(clicOperator){
@@ -246,6 +280,10 @@ public class Calculator extends JPanel {
 		}
 	}
 
+	/**
+	 * Class which does the action of the operator of multiplication
+	 * @author Beyza Salyador
+	 */
 	class MultiplicationListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0){
 			if(clicOperator){
@@ -261,6 +299,10 @@ public class Calculator extends JPanel {
 		}
 	}
 
+	/**
+	 * Class which does the action of the operator of division
+	 * @author Beyza Salyador
+	 */
 	class DivisionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0){
 			if(clicOperator){
@@ -276,6 +318,10 @@ public class Calculator extends JPanel {
 		}
 	}
 
+	/**
+	 * Class which does the action of cancelling
+	 * @author Beyza Salyador
+	 */
 	class CancelListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0){
 			number1 = 0;
