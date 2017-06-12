@@ -10,37 +10,59 @@ import Contacts.Contacts;
 import Contacts.ModifyContact;
 import HomeScreen.HomeScreen;
 import Notes.Notes;
+import Pictures.Pictures;
+import Pictures.ShowImage;
 
 
-public class SmartPhone {
+public  class SmartPhone {
 
-	public static void main(String[] args) throws IOException {
-		JFrame frame = new JFrame();
-		Contacts cont = new Contacts(frame);
-		AddContact addC = new AddContact(frame, cont);
-		ModifyContact modC = new ModifyContact(frame, cont);
-		HomeScreen hs = new HomeScreen(frame, cont);
-		Calculator calc = new Calculator(frame);
-		Notes not = new Notes(frame);
+	static JFrame frame ;
+	static Contacts cont;
+	static AddContact addC ;
+	static ModifyContact modC ;
+	static HomeScreen hs;
+	static Calculator calc ;
+	static Notes not ;
+	static Pictures pic ;
+	static ShowImage im ;	
 
+
+
+	public  SmartPhone(){
+		frame = new JFrame();
+		try {
+			cont = new Contacts(frame);
+			calc = new Calculator(frame);
+			not = new Notes(frame);
+			modC = new ModifyContact(frame, cont);
+			addC = new AddContact(frame, cont);
+			hs = new HomeScreen(frame, cont);
+			pic = new Pictures(frame);
+			im = new ShowImage(frame, pic, addC);
+
+			frame.setLayout(new CardLayout());
+			frame.setSize(480, 800);
+			frame.setResizable(false);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+			frame.add(hs, "home");
+			frame.add(cont, "contacts");
+			frame.add(addC, "addContact");
+			frame.add(modC, "modifyContact");
+			frame.add(calc, "calculator");
+			frame.add(not, "notes");
+			frame.add(pic, "pictures");
+			frame.add(im, "image");
+
+
+			frame.setTitle("SMARTPHONE");
+			frame.setVisible(true);
+
+			// PUT THE CARD HOME BY DEFAULT
+			((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "home");
 		
-		frame.setLayout(new CardLayout());
-		frame.setSize(480, 800);
-		frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-        frame.add(hs, "home");
-		frame.add(cont, "contacts");
-        frame.add(addC, "addContact");
-        frame.add(modC, "modifyContact");
-        frame.add(calc, "calculator");
-        frame.add(not, "notes");
-		
-		
-        frame.setTitle("SMARTPHONE");
-		frame.setVisible(true);
-
-		// PUT THE CARD HOME BY DEFAULT
-		((CardLayout) frame.getContentPane().getLayout()).show(frame.getContentPane(), "home");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
